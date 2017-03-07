@@ -230,6 +230,7 @@ PlayerSettings:
     m_Devices:
     - daydream
     - cardboard
+    - None
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   webPlayerTemplate: APPLICATION:Default
