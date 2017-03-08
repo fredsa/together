@@ -32,7 +32,8 @@ public class VRHelper : MonoBehaviour {
             cardboardPointer.transform.SetParent(Camera.main.transform, false);
             break;
         case "daydream":
-            GvrController controllerMain = Instantiate(GvrControllerMainPrefab).GetComponent<GvrController>();
+            Instantiate(GvrControllerMainPrefab).GetComponent<GvrController>();
+
             GvrControllerVisualManager daydreamPointer = Instantiate(GvrControllerPointerPrefab).GetComponent<GvrControllerVisualManager>();
             daydreamPointer.transform.SetParent(Camera.main.transform.parent, false);
             break;
