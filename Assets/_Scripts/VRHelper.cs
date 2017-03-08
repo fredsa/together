@@ -41,5 +41,8 @@ public class VRHelper : MonoBehaviour {
             throw new NotSupportedException("\"" + deviceName + "\"");
         }
 	}
+
+    void Start() {
+    }
 	
 }

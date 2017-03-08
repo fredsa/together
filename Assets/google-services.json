@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1085580236671",
+    "firebase_url": "https://together-34547.firebaseio.com",
+    "project_id": "together-34547",
+    "storage_bucket": "together-34547.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085580236671:android:f3c119a9c1ea62e4",
+        "android_client_info": {
+          "package_name": "fredsa.together"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085580236671-1drgljnrjb71s9te8972g1261tn8u9dt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpVwQbxCwRHytFcM394b9tSz1Ev__CLIc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
