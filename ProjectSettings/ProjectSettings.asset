@@ -126,10 +126,10 @@ PlayerSettings:
   xboxOneEnable7thCore: 0
   vrSettings:
     cardboard:
-      depthFormat: 0
+      depthFormat: 1
       enableTransitionView: 0
     daydream:
-      depthFormat: 0
+      depthFormat: 1
       useSustainedPerformanceMode: 0
     hololens:
       depthFormat: 1
