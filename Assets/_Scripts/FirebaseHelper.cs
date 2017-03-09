@@ -9,7 +9,7 @@ public class FirebaseHelper : MonoBehaviour {
 
     public DatabaseReference ourRoot { get; private set; }
 
-    public GameObject AvatarFollowerPrefab;
+    public GameObject avatarPrefab;
 
      DatabaseReference sharedRoot;
 
@@ -17,6 +17,8 @@ public class FirebaseHelper : MonoBehaviour {
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://together-34547.firebaseio.com/");
         sharedRoot = FirebaseDatabase.DefaultInstance.RootReference;
         ourRoot = sharedRoot.Child(SystemInfo.deviceUniqueIdentifier);
+
+        Instantiate(avatarPrefab).AddComponent<AvatarController>();
     }
 
     void OnEnable() {
@@ -33,8 +35,7 @@ public class FirebaseHelper : MonoBehaviour {
             return;
         }
 
-        GameObject avatar = Instantiate(AvatarFollowerPrefab);
-        AvatarFollower follower = avatar.AddComponent<AvatarFollower>();
+        AvatarFollower follower = Instantiate(avatarPrefab).AddComponent<AvatarFollower>();
         follower.Init(args.Snapshot.Reference);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Firebase.Database;
 
-public class AvatarController : NetworkBehaviour {
+public class AvatarController : MonoBehaviour {
 
     FirebaseHelper firebaseHelper;
 
@@ -15,7 +15,7 @@ public class AvatarController : NetworkBehaviour {
         heartBeatDelay = new WaitForSeconds(1f);
     }
 
-    public override void OnStartLocalPlayer() {
+    void Start() {
         // Look towards origin
         transform.rotation = Quaternion.LookRotation(-transform.localPosition, transform.up);
         Camera.main.transform.parent.localPosition = transform.localPosition;

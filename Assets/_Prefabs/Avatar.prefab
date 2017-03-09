@@ -37,10 +37,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4220510933760782}
-  - component: {fileID: 114092976295431378}
-  - component: {fileID: 114026630398199208}
   m_Layer: 0
-  m_Name: Avatar Self
+  m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -408,49 +406,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114026630398199208
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1154150200317478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87aa10ffe29c047a39e5f04726942721, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114092976295431378
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1154150200317478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 159
-    i1: 205
-    i2: 252
-    i3: 172
-    i4: 241
-    i5: 210
-    i6: 164
-    i7: 132
-    i8: 26
-    i9: 22
-    i10: 89
-    i11: 40
-    i12: 75
-    i13: 227
-    i14: 205
-    i15: 22
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!135 &135273459966135750
 SphereCollider:
   m_ObjectHideFlags: 1
