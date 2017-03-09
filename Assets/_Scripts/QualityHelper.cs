@@ -14,7 +14,7 @@ public class QualityHelper : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             SetMsaa((index + 1) % VALUES.Length);
         }
     }
