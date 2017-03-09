@@ -23,7 +23,10 @@ public class QualityHelper : MonoBehaviour {
     {
         this.index = index;
         QualitySettings.antiAliasing = VALUES[index];
-        GetComponent<Text>().text = string.Format("{0}x MSAA", VALUES[index]);
+        GetComponent<Text>().text = string.Format(
+            "Use ESC (=Android back button)\n" +
+            "to cycle through MSAA values:\n" +
+            "{0}x MSAA", VALUES[index]);
     }
 
 }
