@@ -53,3 +53,7 @@ steam_api.dll
 
 # GVR
 /GvrIgnoreManifestMergeCheck.txt
+
+# Firebase
+*.log
+node_modules/
