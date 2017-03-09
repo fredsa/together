@@ -7,36 +7,14 @@ using Firebase.Unity.Editor;
 
 public class FirebaseHelper : MonoBehaviour {
 
-    const string POSITION = "pos";
-    const string ROTATION = "rot";
-    const string PRECISION = ".000";
+    public DatabaseReference ourRoot { get; private set; }
 
-    Transform trackedTransform;
-    DatabaseReference myRef;
-    WaitForSecondsRealtime heartBeatDelay;
+     DatabaseReference sharedRoot;
 
-    void Awake() {
-        heartBeatDelay = new WaitForSecondsRealtime(1f);
-    }
-
-    void Start() {
+     void Awake() {
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://together-34547.firebaseio.com/");
-        DatabaseReference root = FirebaseDatabase.DefaultInstance.RootReference;
-
-        myRef = root.Child(SystemInfo.deviceUniqueIdentifier);
+        sharedRoot = FirebaseDatabase.DefaultInstance.RootReference;
+        ourRoot = sharedRoot.Child(SystemInfo.deviceUniqueIdentifier);
     }
 
-    public void SetTrackedTransform(Transform trackedTransform) {
-        StopCoroutine(HeartBeat());
-        this.trackedTransform = trackedTransform;
-        StartCoroutine(HeartBeat());
-    }
-
-    IEnumerator HeartBeat() {
-        myRef.Child(POSITION).SetValueAsync(trackedTransform.rotation.ToString(PRECISION));
-        while (true) {
-            myRef.Child(ROTATION).SetValueAsync(trackedTransform.rotation.ToString(PRECISION));
-            yield return heartBeatDelay;
-        }
-    }
 }
