@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 fileFormatVersion: 2
 guid: 6fe862ad8277f4f90b665edd740f4022
 folderAsset: yes
@@ -7,3 +8,15 @@ DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+||||||| 45a7561... move Plugins/ -> Firebase/Plugins
+=======
+fileFormatVersion: 2
+guid: 78904fa96a1334273a8d24f3ff54899d
+folderAsset: yes
+timeCreated: 1488934674
+licenseType: Pro
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> parent of 45a7561... move Plugins/ -> Firebase/Plugins
