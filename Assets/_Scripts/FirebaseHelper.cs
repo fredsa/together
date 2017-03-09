@@ -9,6 +9,8 @@ public class FirebaseHelper : MonoBehaviour {
 
     public DatabaseReference ourRoot { get; private set; }
 
+    public GameObject AvatarFollowerPrefab;
+
      DatabaseReference sharedRoot;
 
      void Awake() {
@@ -17,4 +19,22 @@ public class FirebaseHelper : MonoBehaviour {
         ourRoot = sharedRoot.Child(SystemInfo.deviceUniqueIdentifier);
     }
 
+    void OnEnable() {
+        sharedRoot.ChildAdded += OnChildAdded;
+    }
+
+    void OnDisable() {
+        sharedRoot.ChildAdded -= OnChildAdded;
+    }
+
+    void OnChildAdded(object sender, ChildChangedEventArgs args) {
+        if (args.DatabaseError != null) {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+
+        GameObject avatar = Instantiate(AvatarFollowerPrefab);
+        AvatarFollower follower = avatar.AddComponent<AvatarFollower>();
+        follower.Init(args.Snapshot.Reference);
+    }
 }

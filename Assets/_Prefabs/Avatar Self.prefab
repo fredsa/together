@@ -38,10 +38,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4220510933760782}
   - component: {fileID: 114092976295431378}
-  - component: {fileID: 114229117854908736}
   - component: {fileID: 114026630398199208}
   m_Layer: 0
-  m_Name: Avatar
+  m_Name: Avatar Self
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -434,45 +433,24 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 13
-    i1: 168
-    i2: 192
-    i3: 255
-    i4: 113
-    i5: 31
-    i6: 4
-    i7: 5
-    i8: 216
-    i9: 15
-    i10: 146
-    i11: 198
-    i12: 52
-    i13: 149
-    i14: 62
-    i15: 82
+    i0: 159
+    i1: 205
+    i2: 252
+    i3: 172
+    i4: 241
+    i5: 210
+    i6: 164
+    i7: 132
+    i8: 26
+    i9: 22
+    i10: 89
+    i11: 40
+    i12: 75
+    i13: 227
+    i14: 205
+    i15: 22
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114229117854908736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1154150200317478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!135 &135273459966135750
 SphereCollider:
   m_ObjectHideFlags: 1

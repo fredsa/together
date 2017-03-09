@@ -6,19 +6,6 @@ using Firebase.Database;
 
 public class AvatarController : NetworkBehaviour {
 
-    const string SEP = "-";
-
-    const string HEADSET = "headset";
-    const string CONTROLLER = "controller";
-
-    const string POS = "pos";
-    const string ROT = "rot";
-
-    const string X = "x";
-    const string Y = "y";
-    const string Z = "z";
-    const string W = "w";
-
     FirebaseHelper firebaseHelper;
 
     WaitForSeconds heartBeatDelay;
@@ -41,36 +28,45 @@ public class AvatarController : NetworkBehaviour {
     }
 
     IEnumerator HeartBeat() {
+        DatabaseReference headsetRoot = firebaseHelper.ourRoot.Child(Avatar.HEADSET);
+        DatabaseReference controllerRoot = firebaseHelper.ourRoot.Child(Avatar.CONTROLLER);
+
         while (GvrPointerManager.Pointer == null) {
+            Debug.LogWarning("Waiting for GvrPointerManager.Pointer to be set…");
             yield return heartBeatDelay;
         }
+        Debug.LogWarningFormat("GvrPointerManager.Pointer = {0}", GvrPointerManager.Pointer);
+
         Transform trackedHeadsetTransform = Camera.main.transform;
         Transform trackedControllerTransform  = GvrPointerManager.Pointer.PointerTransform;
 
         // Fixed position, so set it just once.
-        WritePosition(HEADSET + SEP + POS, trackedHeadsetTransform.position);
-        WritePosition(CONTROLLER + SEP + POS, trackedControllerTransform.position);
+        WritePosition(headsetRoot, trackedHeadsetTransform.position);
 
         while (true) {
             // Always be rotating, so update every heart beat.
-            WriteRotation(HEADSET + SEP + ROT, trackedHeadsetTransform.rotation);
-            WriteRotation(CONTROLLER + SEP + ROT, trackedControllerTransform.rotation);
+            WriteRotation(headsetRoot, trackedHeadsetTransform.rotation);
+            WritePosition(controllerRoot, trackedControllerTransform.position);
+            WriteRotation(controllerRoot, trackedControllerTransform.rotation);
 
             yield return heartBeatDelay;
         }
     }
 
-    void WritePosition(string prefix, Vector3 pos) {
-        firebaseHelper.ourRoot.Child(prefix + SEP + X).SetValueAsync(pos.x);
-        firebaseHelper.ourRoot.Child(prefix + SEP + Y).SetValueAsync(pos.y);
-        firebaseHelper.ourRoot.Child(prefix + SEP + Z).SetValueAsync(pos.z);
+    void WritePosition(DatabaseReference transformRoot, Vector3 pos) {
+        DatabaseReference db = transformRoot.Child(Avatar.POS);
+        WriteLongVector3(db, pos);
     }
 
-    void WriteRotation(string prefix, Quaternion rot) {
-        firebaseHelper.ourRoot.Child(prefix + SEP + X).SetValueAsync(rot.x);
-        firebaseHelper.ourRoot.Child(prefix + SEP + Y).SetValueAsync(rot.y);
-        firebaseHelper.ourRoot.Child(prefix + SEP + Z).SetValueAsync(rot.z);
-        firebaseHelper.ourRoot.Child(prefix + SEP + W).SetValueAsync(rot.w);
+    void WriteRotation(DatabaseReference transformRoot, Quaternion rot) {
+        DatabaseReference db = transformRoot.Child(Avatar.ROT);
+        WriteLongVector3(db, rot.eulerAngles);
+    }
+
+    void WriteLongVector3(DatabaseReference db, Vector3 v) {
+        db.Child(Avatar.X).SetValueAsync((int)v.x);
+        db.Child(Avatar.Y).SetValueAsync((int)v.y);
+        db.Child(Avatar.Z).SetValueAsync((int)v.z);
     }
 
 }
