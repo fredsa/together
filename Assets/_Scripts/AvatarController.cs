@@ -17,13 +17,20 @@ public class AvatarController : MonoBehaviour {
     void Start() {
         // Look towards origin
         transform.rotation = Quaternion.LookRotation(-transform.localPosition, transform.up);
-        // Set player height
-        var height = Avatar.HEAD_HEIGHT + Random.Range (-.2f, .2f);
-        transform.localPosition = height * transform.up;
+        // Set player position
+        transform.localPosition = RandomPosition();
 
         Camera.main.transform.parent.localPosition = transform.localPosition;
         Camera.main.transform.parent.localRotation = transform.localRotation;
         StartCoroutine(HeartBeat());
+    }
+
+    Vector3 RandomPosition ()
+    {
+        float y = Avatar.HEAD_HEIGHT + Random.Range (-.2f, .2f);
+        float x = Mathf.Sign(Random.Range(-1f,1f)) * 2f;
+        float z = Mathf.Sign(Random.Range(-1f,1f)) * 2f;
+        return new Vector3(x, y, z);
     }
 
     void Update() {
