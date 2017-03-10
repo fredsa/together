@@ -18,7 +18,19 @@ public class FirebaseHelper : MonoBehaviour {
         sharedRoot = FirebaseDatabase.DefaultInstance.RootReference;
         ourRoot = sharedRoot.Child(SystemInfo.deviceUniqueIdentifier);
 
-        Instantiate(avatarPrefab).AddComponent<AvatarController>();
+        AvatarController self = Instantiate(avatarPrefab).AddComponent<AvatarController>();
+        self.name += " - self";
+        GhostIt(self.gameObject);
+    }
+
+    void GhostIt (GameObject go)
+    {
+        foreach (MeshRenderer mr in go.GetComponentsInChildren<MeshRenderer>()) {
+            Color color = mr.material.color;
+            color.a *= .5f;
+            mr.material.color = color;
+        }
+
     }
 
     void OnEnable() {
@@ -36,6 +48,7 @@ public class FirebaseHelper : MonoBehaviour {
         }
 
         AvatarFollower follower = Instantiate(avatarPrefab).AddComponent<AvatarFollower>();
+        follower.name += " - follower " + args.Snapshot.Key;
         follower.Init(args.Snapshot.Reference);
     }
 }

@@ -18,9 +18,17 @@ public class AvatarController : MonoBehaviour {
     void Start() {
         // Look towards origin
         transform.rotation = Quaternion.LookRotation(-transform.localPosition, transform.up);
+        // Set player height
+        var height = Avatar.HEAD_HEIGHT + Random.Range (-.2f, .2f);
+        transform.localPosition = height * transform.up;
+
         Camera.main.transform.parent.localPosition = transform.localPosition;
         Camera.main.transform.parent.localRotation = transform.localRotation;
         StartCoroutine(HeartBeat());
+    }
+
+    void Update() {
+        transform.rotation = Camera.main.transform.rotation;
     }
 
     void OnDestroy() {
@@ -55,7 +63,7 @@ public class AvatarController : MonoBehaviour {
 
     void WritePosition(DatabaseReference transformRoot, Vector3 pos) {
         DatabaseReference db = transformRoot.Child(Avatar.POS);
-        WriteLongVector3(db, pos);
+        WriteLongVector3(db, pos / Avatar.POS_PRECISION);
     }
 
     void WriteRotation(DatabaseReference transformRoot, Quaternion rot) {

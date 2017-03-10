@@ -5,46 +5,40 @@ using Firebase.Database;
 
 public class AvatarFollower : MonoBehaviour {
 
-	void Awake () {
-		
-	}
-	
+    DatabaseReference ourRoot;
+
     public void Init (DatabaseReference ourRoot) {
-        ourRoot.Child(Avatar.HEADSET).ChildChanged += OnHeadsetChanged;
-        ourRoot.Child(Avatar.CONTROLLER).ChildChanged += OnControllerChanged;
+        this.ourRoot = ourRoot;
+        ourRoot.ChildChanged += OnChildChanged;
+        ourRoot.ChildRemoved += OnChildRemoved;
 	}
 
-    void OnHeadsetChanged(object sender, ChildChangedEventArgs args) {
-        if (args.DatabaseError != null) {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
+    void OnChildChanged (object sender, ChildChangedEventArgs args)
+    {
+        switch(args.Snapshot.Key) {
+        case Avatar.HEADSET:
+            TransformChanged(transform, args.Snapshot);
+            break;
+        case Avatar.CONTROLLER:
+//            TransformChanged(controllerTransform, args.Snapshot);
+            break;
         }
-
-        TransformChanged(transform, args.Snapshot);
     }
 
-    void OnControllerChanged(object sender, ChildChangedEventArgs args) {
-        if (args.DatabaseError != null) {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-
-        //TransformChanged(controllerTransform, args.Snapshot);
+    void OnChildRemoved (object sender, ChildChangedEventArgs e)
+    {
+        ourRoot.ChildChanged -= OnChildChanged;
+        ourRoot.ChildRemoved -= OnChildRemoved;
+        Destroy(gameObject);
     }
 
     void TransformChanged(Transform t, DataSnapshot snapshot) {
-        switch (snapshot.Key) {
-            case Avatar.POS:
-                t.position = GetPos(snapshot);
-                break;
-            case Avatar.ROT:
-                t.rotation = GetRot(snapshot);
-                break;
-        }
+        t.position = GetPos(snapshot.Child(Avatar.POS));
+        t.rotation = GetRot(snapshot.Child(Avatar.ROT));
     }
 
     Vector3 GetPos(DataSnapshot snapshot) {
-        return ParseLongVector3(snapshot);
+        return Avatar.POS_PRECISION * ParseLongVector3(snapshot);
     }
 
     Quaternion GetRot(DataSnapshot snapshot) {
