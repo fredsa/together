@@ -7,6 +7,12 @@ public class AvatarFollower : MonoBehaviour {
 
     DatabaseReference ourRoot;
 
+    Quaternion targetRot;
+
+    void Update() {
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Avatar.LERP_RATE);
+    }
+
     public void Init (DatabaseReference ourRoot) {
         this.ourRoot = ourRoot;
         ourRoot.ChildChanged += OnChildChanged;
@@ -34,7 +40,7 @@ public class AvatarFollower : MonoBehaviour {
 
     void TransformChanged(Transform t, DataSnapshot snapshot) {
         t.position = GetPos(snapshot.Child(Avatar.POS));
-        t.rotation = GetRot(snapshot.Child(Avatar.ROT));
+        targetRot = GetRot(snapshot.Child(Avatar.ROT));
     }
 
     Vector3 GetPos(DataSnapshot snapshot) {

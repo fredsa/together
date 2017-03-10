@@ -7,12 +7,11 @@ using Firebase.Database;
 public class AvatarController : MonoBehaviour {
 
     FirebaseHelper firebaseHelper;
-
     WaitForSeconds heartBeatDelay;
 
     void Awake() {
         firebaseHelper = GameObject.FindObjectOfType<FirebaseHelper>();
-        heartBeatDelay = new WaitForSeconds(1f);
+        heartBeatDelay = new WaitForSeconds(Avatar.HEART_BEAT_INTERVAL);
     }
 
     void Start() {
