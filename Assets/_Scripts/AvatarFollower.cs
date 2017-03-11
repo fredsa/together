@@ -7,42 +7,73 @@ public class AvatarFollower : MonoBehaviour {
 
     DatabaseReference ourRoot;
 
-    Quaternion targetRot;
+    Vector3 headTargetPos;
+    Vector3 controllerTargetPos;
+
+    Quaternion headTargetRot;
+    Quaternion controllerTargetRot;
+
+    Transform headTransform;
+    Transform controllerTransform;
+
+    void Awake() {
+        headTransform = transform.Find("Head");
+        controllerTransform = transform.Find("Controller");
+    }
 
     void Update() {
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Avatar.LERP_RATE);
+        headTransform.position = Vector3.Lerp(headTransform.position, headTargetPos, Avatar.LERP_RATE);
+        headTransform.rotation = Quaternion.Lerp(headTransform.rotation, headTargetRot, Avatar.LERP_RATE);
+
+        controllerTransform.position = Vector3.Lerp(controllerTransform.position, controllerTargetPos, Avatar.LERP_RATE);
+        controllerTransform.rotation = Quaternion.Lerp(controllerTransform.rotation, controllerTargetRot, Avatar.LERP_RATE);
     }
 
     public void Init (DatabaseReference ourRoot) {
         this.ourRoot = ourRoot;
+        ourRoot.GetValueAsync().ContinueWith(task => {
+            if (task.IsFaulted) {
+                Debug.LogWarningFormat("ourRoot.GetValueAsync faulted: {0}", task.Exception);
+                Destroy(gameObject);
+            }
+            // set intial targets
+            SetTargets(task.Result.Child(Avatar.HEADSET));
+            SetTargets(task.Result.Child(Avatar.CONTROLLER));
+        });
         ourRoot.ChildChanged += OnChildChanged;
         ourRoot.ChildRemoved += OnChildRemoved;
 	}
 
     void OnChildChanged (object sender, ChildChangedEventArgs args)
     {
-        switch(args.Snapshot.Key) {
+        // update targets
+        SetTargets(args.Snapshot);
+    }
+
+    void SetTargets (DataSnapshot snapshot)
+    {
+        switch(snapshot.Key) {
         case Avatar.HEADSET:
-            TransformChanged(transform, args.Snapshot);
+            headTargetPos = GetPos(snapshot.Child(Avatar.POS));
+            headTargetRot = GetRot(snapshot.Child(Avatar.ROT));
             break;
         case Avatar.CONTROLLER:
-//            TransformChanged(controllerTransform, args.Snapshot);
+            controllerTargetPos = GetPos(snapshot.Child(Avatar.POS));
+            controllerTargetRot = GetRot(snapshot.Child(Avatar.ROT));
             break;
         }
     }
 
     void OnChildRemoved (object sender, ChildChangedEventArgs e)
     {
-        ourRoot.ChildChanged -= OnChildChanged;
-        ourRoot.ChildRemoved -= OnChildRemoved;
         Destroy(gameObject);
     }
-
-    void TransformChanged(Transform t, DataSnapshot snapshot) {
-        t.position = GetPos(snapshot.Child(Avatar.POS));
-        targetRot = GetRot(snapshot.Child(Avatar.ROT));
+    
+    void OnDestroy() {
+        ourRoot.ChildChanged -= OnChildChanged;
+        ourRoot.ChildRemoved -= OnChildRemoved;
     }
-
+     
     Vector3 GetPos(DataSnapshot snapshot) {
         return Avatar.POS_PRECISION * ParseLongVector3(snapshot);
     }
